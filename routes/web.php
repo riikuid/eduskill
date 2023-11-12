@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\CourseLessonController;
+use App\Http\Controllers\CourseVideoController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,16 +18,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
+    Route::name('dashboard.')->prefix('dashboard')->group(function () {
+        Route::get('/', [DashboardController::class, 'index'])->name('index');
+        Route::resource('category', CategoryController::class);
+        Route::resource('course', CourseController::class);
+        // Route::resource('course.detail', CourseDetailController::class);
+        Route::resource('course.lesson', CourseLessonController::class)->shallow()->only([
+            'create', 'store', 'edit', 'update', 'destroy'
+        ]);
+        Route::resource('course.lesson.video', CourseVideoController::class)->shallow()->only([
+            'index', 'create', 'store', 'edit', 'update', 'destroy'
+        ]);
+    });
 });

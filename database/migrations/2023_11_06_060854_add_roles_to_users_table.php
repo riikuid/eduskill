@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('thumbnails', function (Blueprint $table) {
-            $table->id();
-            $table->integer('item_id');
-            $table->longText('thumbnail');
-            $table->softDeletes();
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('roles')->after('email')->default('USER');
         });
     }
 
@@ -25,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('thumbnails');
+        Schema::table('users', function (Blueprint $table) {
+            //
+        });
     }
 };

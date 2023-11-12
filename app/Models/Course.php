@@ -15,6 +15,7 @@ class Course extends Model
         'description',
         'price',
         'category_id',
+        'thumbnail'
     ];
 
     public function category()
@@ -25,10 +26,5 @@ class Course extends Model
     public function lessons()
     {
         return $this->hasMany(CourseLesson::class, 'course_id', 'id');
-    }
-
-    public function thumbnails()
-    {
-        return $this->hasMany(Thumbnail::class, 'item_id', 'id');
     }
 }

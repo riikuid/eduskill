@@ -17,6 +17,7 @@ return new class extends Migration
             $table->longText('description');
             $table->string('price');
             $table->integer('category_id')->nullable();
+            $table->longText('thumbnail');
             $table->softDeletes();
             $table->timestamps();
         });
