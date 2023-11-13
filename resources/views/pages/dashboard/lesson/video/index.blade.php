@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ $course->title }} &raquo; {{ $lesson->title }}
+            {{ $course->title }} &raquo; {{ $lesson->title }} &raquo; List Video
         </h2>
     </x-slot>
 

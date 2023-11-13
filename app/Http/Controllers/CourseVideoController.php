@@ -29,6 +29,10 @@ class CourseVideoController extends Controller
             return DataTables::of($query)
                 ->addColumn('action', function ($item) {
                     return '
+                    <a class="inline-block border border-gray-400 bg-gray-400 text-white rounded-md px-2 py-1 m-1 transition duration-500 ease select-none hover:bg-gray-600 hover:border-gray-600 focus:outline-none focus:shadow-outline"
+                    href="' . route('dashboard.video.edit', ['course' => $item->lesson->course_id, 'lesson' => $item->lesson_course_id, 'video' => $item->id]) . '">
+                    Edit
+                    </a>
                     <form class="inline-block" action="" method="POST">
                         <button class="border border-red-500 bg-red-500 text-white rounded-md px-2 py-1 m-2 transition duration-500 ease select-none hover:bg-red-600 focus:outline-none focus:shadow-outline" >
                             Hapus
@@ -101,17 +105,20 @@ class CourseVideoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Course $course, CourseLesson $lesson, CourseVideo $video)
     {
-        //
+        return view('pages.dashboard.lesson.video.edit', compact('course', 'lesson', 'video'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CourseVideoRequest $request, Course $course, CourseLesson $lesson, CourseVideo $video)
     {
-        //
+        $data = $request->all();
+        $video->update($data);
+
+        return redirect()->route('dashboard.course.lesson.video.index', ['course' => $video->lesson->course_id, 'lesson' => $video->course_lesson_id]);
     }
 
     /**
