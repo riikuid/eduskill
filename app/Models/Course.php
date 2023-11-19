@@ -12,8 +12,10 @@ class Course extends Model
 
     protected $fillable = [
         'title',
+        'slug',
         'description',
-        'price',
+        'price_before',
+        'price_after',
         'category_id',
         'thumbnail'
     ];
@@ -26,5 +28,10 @@ class Course extends Model
     public function lessons()
     {
         return $this->hasMany(CourseLesson::class, 'course_id', 'id');
+    }
+
+    public function user_course()
+    {
+        return $this->belongsTo(UserCourse::class, 'id', 'course_id');
     }
 }

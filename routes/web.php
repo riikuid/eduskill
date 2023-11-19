@@ -5,6 +5,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CourseLessonController;
 use App\Http\Controllers\CourseVideoController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FrontEndController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,9 +20,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [FrontEndController::class, 'index'])->name('index');
+Route::get('/detail', [FrontEndController::class, 'detail'])->name('detail');
 
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
     Route::name('dashboard.')->prefix('dashboard')->group(function () {

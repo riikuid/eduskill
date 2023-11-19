@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('course_videos', function (Blueprint $table) {
             $table->id();
-            $table->integer('course_lesson_id');
+            $table->bigInteger('course_lesson_id');
             $table->string('title');
             $table->longText('link');
             $table->softDeletes();

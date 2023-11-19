@@ -69,9 +69,10 @@ class CourseController extends Controller
     public function store(CourseRequest $request)
     {
         $path = $request->file('thumbnail')->store('public/course');
-
+        $slug = str_replace(' ', '-', strtolower($request->title));
         Course::create([
             'title' => $request->title,
+            'slug' => $slug,
             'description' => $request->description,
             'category_id' => $request->category_id,
             'price' => $request->price,

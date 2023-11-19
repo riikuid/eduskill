@@ -34,8 +34,8 @@
 
                     },
                     {
-                        data: 'price',
-                        name: 'price'
+                        data: 'price_after',
+                        name: 'price_after'
 
                     },
                     {
@@ -72,7 +72,7 @@
                                 <th>Thumbnail</th>
                                 <th>Judul</th>
                                 <th>Kategori</th>
-                                <th>Harga</th>
+                                <th>Harga Akhir</th>
                                 <th>Rilis</th>
                                 <th>Aksi</th>
                             </tr>
