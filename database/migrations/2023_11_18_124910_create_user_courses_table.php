@@ -17,7 +17,7 @@ return new class extends Migration
             $table->bigInteger('course_id');
             $table->bigInteger('transaction_id');
             $table->softDeletes();
-            $table->$table->timestamps();
+            $table->timestamps();
         });
     }
 
