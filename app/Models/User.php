@@ -59,8 +59,13 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    public function courses()
+    public function userCourses()
     {
         return $this->hasMany(UserCourse::class, 'user_id', 'id');
+    }
+
+    public function hasCourse($courseId)
+    {
+        return $this->userCourses->contains('course_id', $courseId);
     }
 }

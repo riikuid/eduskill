@@ -14,10 +14,11 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id');
-            $table->string('name');
-            $table->string('email');
-            $table->bigInteger('total_price');
             $table->bigInteger('course_id');
+            $table->bigInteger('total_price');
+            $table->string('payment')->default('MIDTRANS');
+            $table->string('payment_url')->nullable();
+            $table->string('order_id')->nullable();
             $table->string('status')->default('PENDING');
             $table->softDeletes();
             $table->timestamps();

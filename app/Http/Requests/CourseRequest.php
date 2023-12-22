@@ -26,7 +26,8 @@ class CourseRequest extends FormRequest
             'title' => 'required|max:255',
             'category_id' => 'required|integer',
             'description' => 'required',
-            'price' => 'required|integer',
+            'price_before' => 'required|integer',
+            'price_after' => 'required|integer',
             'thumbnail' => 'required|image',
         ];
     }

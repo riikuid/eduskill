@@ -81,7 +81,7 @@
                                     <tr>
                                         <th class="border px-6 py-4 text-left">Harga</th>
                                         <td class="border px-6 py-4">
-                                            {{ $formattedAmount = 'Rp. ' . number_format($course->price) }}</td>
+                                            {{ $formattedAmount = 'Rp. ' . number_format($course->price_after) }}</td>
                                     </tr>
                                     <tr>
                                         <th class="border px-6 py-4 text-left">Deskripsi</th>

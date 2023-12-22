@@ -261,32 +261,40 @@
                                     <img src="{{ $course->thumbnail ? Storage::url($course->thumbnail) : 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==' }}"
                                         alt="" style="width: 320px; height:180px; object-fit:cover" />
                                     <div class="mt-3 text-xs text-Orange_Primary">{{ $course->category->name }}</div>
-                                    <div class="flex text-xl     font-bold justify-between items-center">
-                                        <div class="truncate items-center">{{ $course->title }}</div>
-                                        <div class="flex items-center">
-                                            <AiOutlineArrowUp class="rotate-45 inline-block ml-1 text-[#667085]" />
-                                        </div>
+                                    <div class="flex text-xl font-bold justify-between items-center">
+                                        <a class="truncate items-center"
+                                            href="{{ route('course.details', $course->slug) }}">{{ $course->title }}</a>
+
                                     </div>
-                                    <p class="text-sm text-[#667085] text-gray-600 mt-2 line-clamp-2">
+                                    <p class="text-sm text-gray-600 mt-2 line-clamp-2">
                                         {{ implode(' ', array_slice(str_word_count($course->description, 2), 0, 15)) }}
                                     </p>
-
                                     <div class="flex justify-between items-center mt-3">
-                                        {{-- <div class="flex items-center">
-                                        <img src="{{ url('/frontend/images/hero_courses1.png') }}" alt="Hero"
-                                            class="w-8 h-8" />
-                                        <div class="ml-2 flex flex-col">
-                                            <div class="font-semibold text-sm">John Doe</div>
-                                            <div class="text-xs font-light text-[#667085]">2001 Enrolled</div>
-                                        </div>
-                                    </div> --}}
-                                        <div class="text-2xl text-Orange_Primary font-bold">
-                                            Rp{{ number_format($course->price) }}</div>
+                                        @if ($currentUser)
+                                            @if ($currentUser->hasCourse($course->id))
+                                                <div class="text-2xl text-Orange_Primary font-bold">
+                                                    Sudah Dimiliki</div>
+                                            @else
+                                                <div class="text-2xl text-Orange_Primary font-bold">
+                                                    Rp{{ number_format($course->price_after) }}</div>
+                                            @endif
+                                        @else
+                                            <div class="text-2xl text-Orange_Primary font-bold">
+                                                Rp{{ number_format($course->price_after) }}</div>
+                                        @endif
+
+                                        {{-- @if ($currentUser && !$currentUser->hasCourse($course->id))
+                                            <div class="text-2xl text-Orange_Primary font-bold">
+                                                Rp{{ number_format($course->price_after) }}</div>
+                                        @endif --}}
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
                 @endforeach
+
+
                 <!-- button slider-->
                 <div class="flex justify-center items-center mt-4 cursor-pointer gap-1" onclick="toggleSlider()">
                     <div class="w-12 h-3 bg-orange-500 rounded-md" onclick="showCourse('courses-1')"></div>

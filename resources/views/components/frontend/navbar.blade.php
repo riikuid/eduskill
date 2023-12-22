@@ -28,25 +28,37 @@
                         </a>
 
                     </li>
+                    @auth
+                        <li class="list-none cursor-pointer mx-4">
+                            <a href="{{ route('dashboard.index') }}">
+                                <div class="font-bold transition-all duration-300 text-black">
+                                    My Class
+                                </div>
+                            </a>
+
+                        </li>
+                    @endauth
                 </div>
                 <div class="flex items-center gap-2">
                     <!-- {/* <button class="py-3 px-6 font-bold text-Black_Primary text-sm">
                         Masuk
                     </button> */} -->
-                    <button
-                        class="py-2 px-3 md:py-3 md:px-6 font-bold text-white text-extra-mini md:text-sm border border-solid rounded-md md:rounded-lg border-Orange_Secondary bg-Orange_Primary">
-                        <a href="https://eduskill.mayar.link/pl/basic-web-development">
-                            Daftar Kelas
-                        </a>
-                    </button>
-                </div>
 
+                    @guest
+                        <button
+                            class="py-2 px-3 md:py-3 md:px-6 font-bold text-white text-extra-mini md:text-sm border border-solid rounded-md md:rounded-lg border-Orange_Secondary bg-Orange_Primary">
+                            <a href="{{ route('login') }}">
+                                Login
+                            </a>
+                        </button>
+                    </div>
+                @endguest
             </div>
             <!-- <div class="fixed h-full w-full top-0 left-0 z-20 bg-Orange_Primary flex flex-col justify-center items-center shadow-lg gap-8 py-8">
-                <MobileNavLinks />
-                <div class="absolute right-12 top-12 text-white text-3xl cursor-pointer" >
-                </div>
-                </div>
-            </div> -->
+                    <MobileNavLinks />
+                    <div class="absolute right-12 top-12 text-white text-3xl cursor-pointer" >
+                    </div>
+                    </div>
+                </div> -->
         </div>
 </nav>

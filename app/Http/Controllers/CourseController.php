@@ -75,7 +75,8 @@ class CourseController extends Controller
             'slug' => $slug,
             'description' => $request->description,
             'category_id' => $request->category_id,
-            'price' => $request->price,
+            'price_before' => $request->price_before,
+            'price_after' => $request->price_after,
             'thumbnail' => $path,
         ]);
 

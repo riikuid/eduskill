@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('user_id');
             $table->bigInteger('course_id');
-            $table->bigInteger('transaction_id');
+            $table->string('order_id');
             $table->softDeletes();
             $table->timestamps();
         });
