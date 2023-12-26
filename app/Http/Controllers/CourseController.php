@@ -38,7 +38,7 @@ class CourseController extends Controller
                     </form>';
                 })
                 ->editColumn('thumbnail', function ($item) {
-                    return '<img style="width: 160px; height: 90px" src="' . Storage::url($item->thumbnail) . '"/>';
+                    return '<img style="width: 160px; height: 90px; object-fit: cover" src="' . Storage::url($item->thumbnail) . '"/>';
                 })
                 ->editColumn('created_at', function ($item) {
                     return date("F Y", strtotime($item->created_at));

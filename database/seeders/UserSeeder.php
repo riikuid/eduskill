@@ -16,10 +16,10 @@ class UserSeeder extends Seeder
     {
         DB::table('users')->insert([
             'name' => 'admin',
-            'email' => 'fahmibambe@gmail.com',
+            'email' => 'admin@admin.com',
             'email_verified_at' => now(),
             'roles' => 'ADMIN',
-            'password' => '$2y$10$sYyAXfexl/86wbvAjU1f/exdb4u5UdfrIioAMTS8qnXxU9F54z0ra', // password
+            'password' => '$2y$10$F.0ZqnvDT6G0QNsezfFGou2mfhPL.PshncKpkLCbNGowAnRS0Iw7i', // password
             'two_factor_secret' => null,
             'two_factor_recovery_codes' => null,
             'remember_token' => Str::random(10),

@@ -7,6 +7,8 @@ use App\Http\Requests\CourseVideoRequest;
 use App\Models\Course;
 use App\Models\CourseLesson;
 use App\Models\CourseVideo;
+use Carbon\Carbon;
+use Carbon\CarbonInterval;
 use DateInterval;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -29,6 +31,10 @@ class CourseVideoController extends Controller
             return DataTables::of($query)
                 ->addColumn('action', function ($item) {
                     return '
+                    <a class="inline-block border border-indigo-500 bg-indigo-500 text-white rounded-md px-2 py-1 m-1 transition duration-500 ease select-none hover:bg-indigo-600 hover:border-indigo-600 focus:outline-none focus:shadow-outline"
+                    href="' . $item->link . '">
+                    Open Link
+                    </a>
                     <a class="inline-block border border-gray-400 bg-gray-400 text-white rounded-md px-2 py-1 m-1 transition duration-500 ease select-none hover:bg-gray-600 hover:border-gray-600 focus:outline-none focus:shadow-outline"
                     href="' . route('dashboard.video.edit', ['course' => $item->lesson->course_id, 'lesson' => $item->lesson_course_id, 'video' => $item->id]) . '">
                     Edit
@@ -40,32 +46,13 @@ class CourseVideoController extends Controller
 
                     </form>';
                 })
-                ->editColumn('thumbnail', function ($item) {
-                    $videoId = Youtube::parseVidFromURL($item->link);
-
-                    $video = Youtube::getVideoInfo($videoId);
-                    $thumbnail = $video->snippet->thumbnails->standard->url;
-
-                    return '<img style="width: 160px; height: 90px" src="' . $thumbnail . '"/>';
+                ->editColumn('url_thumbnail', function ($item) {
+                    return '<img style="width: 160px; height: 90px" src="' . $item->url_thumbnail . '"/>';
                 })
                 ->editColumn('duration', function ($item) {
-                    $videoId = Youtube::parseVidFromURL($item->link);
-                    $video = Youtube::getVideoInfo($videoId);
-                    $duration = $video->contentDetails->duration;
-
-                    $interval = new DateInterval($duration);
-
-                    // Dapatkan waktu dalam format jam:menit:detik
-                    $hours = $interval->h;
-                    $minutes = $interval->i;
-                    $seconds = $interval->s;
-
-                    // Format waktu
-                    $formattedDuration = sprintf('%02d:%02d:%02d', $hours, $minutes, $seconds);
-
-                    return $formattedDuration;
+                    return "$item->duration menit";
                 })
-                ->rawColumns(['action', 'thumbnail'])
+                ->rawColumns(['action', 'url_thumbnail'])
                 ->make();
         }
 
@@ -85,10 +72,22 @@ class CourseVideoController extends Controller
      */
     public function store(CourseVideoRequest $request, Course $course, CourseLesson $lesson)
     {
+        $videoId = Youtube::parseVidFromURL($request->link);
+        $video = Youtube::getVideoInfo($videoId);
+
+        // Menghitung total menit
+        $carbonDuration = CarbonInterval::create($video->contentDetails->duration);
+        $duration = intval($carbonDuration->totalMinutes);
+
+        // dd($video);
+
         CourseVideo::create([
             'course_lesson_id' => $lesson->id,
-            'title' => $request->title,
             'link' => $request->link,
+            'title' => $video->snippet->title,
+            'duration' => $duration,
+            'url_thumbnail' => $video->snippet->thumbnails->high->url,
+            'embed_html' => $video->player->embedHtml,
         ]);
 
         return redirect()->route('dashboard.course.lesson.video.index', ['course' => $course->id, 'lesson' => $lesson->id]);
@@ -115,8 +114,25 @@ class CourseVideoController extends Controller
      */
     public function update(CourseVideoRequest $request, Course $course, CourseLesson $lesson, CourseVideo $video)
     {
-        $data = $request->all();
-        $video->update($data);
+        if ($request->link != $video->link) {
+            $videoId = Youtube::parseVidFromURL($request->link);
+            $video = Youtube::getVideoInfo($videoId);
+
+            // Menghitung total menit
+            $carbonDuration = CarbonInterval::create($video->contentDetails->duration);
+            $duration = intval($carbonDuration->totalMinutes);
+
+            // dd($video);
+
+            $video->update([
+                'course_lesson_id' => $lesson->id,
+                'link' => $request->link,
+                'title' => $video->snippet->title,
+                'duration' => $duration,
+                'url_thumbnail' => $video->snippet->thumbnails->high->url,
+                'embed_html' => $video->player->embedHtml,
+            ]);
+        }
 
         return redirect()->route('dashboard.course.lesson.video.index', ['course' => $video->lesson->course_id, 'lesson' => $video->course_lesson_id]);
     }

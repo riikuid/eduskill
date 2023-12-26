@@ -19,8 +19,8 @@
                         width: '5%'
                     },
                     {
-                        data: 'thumbnail',
-                        name: 'thumbnail',
+                        data: 'url_thumbnail',
+                        name: 'url_thumbnail',
                         // width: '20%',
                     },
                     {
@@ -38,7 +38,7 @@
                         name: 'action',
                         orderable: false,
                         searchable: false,
-                        width: '20%'
+                        width: '25%'
                     },
                 ],
             });
@@ -50,7 +50,7 @@
             <div class="mb-10">
                 <a href="{{ route('dashboard.course.lesson.video.create', ['course' => $course->id, 'lesson' => $lesson->id]) }}"
                     class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded shadow-lg">
-                    + Create Course
+                    + Add Video
                 </a>
             </div>
             <div class="shadow overflow-hidden sm:rounded-md">

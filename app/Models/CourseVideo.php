@@ -12,8 +12,11 @@ class CourseVideo extends Model
 
     protected $fillable = [
         'course_lesson_id',
-        'title',
         'link',
+        'title',
+        'duration',
+        'url_thumbnail',
+        'embed_html',
     ];
 
     public function lesson()

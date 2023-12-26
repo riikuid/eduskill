@@ -24,7 +24,6 @@ class CourseVideoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|max:255',
             'link' => 'required|max:255',
             // 'link' => ['bail', 'required', new ValidYoutubeVideo],
         ];
@@ -33,8 +32,6 @@ class CourseVideoRequest extends FormRequest
     public function messages()
     {
         return [
-            'title.required' => 'Judul harus diisi.',
-            'title.max' => 'Judul tidak boleh lebih dari 255 karakter.',
             'link.required' => 'Link harus diisi.',
         ];
     }

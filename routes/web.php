@@ -21,15 +21,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-Route::get('/', [FrontEndController::class, 'index'])->name('index');
-Route::get('/{slug}', [FrontendController::class, 'details'])->name('course.details');
-Route::post('/{slug}/buy', [FrontendController::class, 'buyCourse'])->name('course.buy');
-Route::post('/checkout', [FrontendController::class, 'checkout'])->name('checkout');
-
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->name('dashboard.')->prefix('dashboard')->group(function () {
-    Route::get('/', [DashboardController::class, 'index']);
-    Route::get('/index', [DashboardController::class, 'index'])->name('index');
+    Route::get('/', [DashboardController::class, 'index'])->name('index');
+    Route::get('/index', [DashboardController::class, 'index']);
     Route::get('/my-courses', [UserCourseController::class, 'index'])->name('my-courses');
     Route::get('/my-courses/{slug}', [UserCourseController::class, 'show'])->name('my-courses.show');
 
@@ -45,3 +39,9 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         ]);
     });
 });
+
+
+Route::get('/', [FrontEndController::class, 'index'])->name('index');
+Route::get('/{slug}', [FrontendController::class, 'details'])->name('course.details');
+Route::post('/{slug}/buy', [FrontendController::class, 'buyCourse'])->name('course.buy');
+Route::post('/checkout', [FrontendController::class, 'checkout'])->name('checkout');
